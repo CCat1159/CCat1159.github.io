@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tank Gallery</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 20px;
+        }
+        table {
+            width: 90%;
+            margin: 20px auto;
+            border-collapse: collapse;
+            background-color: white;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        table th, table td {
+            padding: 12px;
+            border: 1px solid #ddd;
+        }
+        table th {
+            background-color: #4CAF50;
+            color: white;
+        }
+        img {
+            width: 100px;
+            height: auto;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+        .container {
+            margin: 30px;
+        }
+        .image-cell {
+            width: 150px;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Tank Gallery</h1>
+        <p>Gallery of Russian Tank Losses in Ukraine</p>
+    </header>
+
+    <div class="container">
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Model</th>
+                    <th>Category</th>
+                    <th>Date</th>
+                    <th>Image</th>
+                </tr>
+            </thead>
+            <tbody id="data-table-body">
+                <!-- Data rows will be injected here -->
+            </tbody>
+        </table>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Cameron Catanzaro. All rights reserved.</p>
+    </footer>
+
+    <script>
+        const data = [
+            { "ID": "1", "Model": "T-54-3M", "Category": "Destroyed", "Date": "2024-02-18", "Image": "", "Image URL": "https://i.postimg.cc/zBC4NPVv/1032-unkn-t55-destr-18-02-24.jpg" },
+            { "ID": "2", "Model": "T-54-3M", "Category": "Damaged, Abandoned", "Date": "2024-02-21", "Image": "", "Image URL": "https://i.postimg.cc/s29RHpfN/1036-T-54-3-M-dam-aband-21-02-24.jpg" },
+            { "ID": "3", "Model": "T-54B", "Category": "Destroyed", "Date": "2024-03-05", "Image": "", "Image URL": "https://i.postimg.cc/02ZtkYNd/1020-T-54-B-destr-05-03-24.jpg" },
+            { "ID": "4", "Model": "T-54B", "Category": "Destroyed", "Date": "2024-08-17", "Image": "", "Image URL": "https://i.postimg.cc/Z5SDNYNS/1103-T-54-B-destr-17-08-24.jpg" },
+            { "ID": "5", "Model": "T-55A", "Category": "Destroyed", "Date": "2024-02-04", "Image": "", "Image URL": "https://x.com/bayraktar_1love/status/1754060409693163926" },
+            { "ID": "6", "Model": "T-55A", "Category": "Destroyed", "Date": "2024-05-09", "Image": "", "Image URL": "https://i.postimg.cc/rsGYFggv/1009-T-55-A-destr-09-05-24.jpg" },
+            { "ID": "7", "Model": "T-55A", "Category": "Damaged", "Date": "2024-08-05", "Image": "", "Image URL": "https://i.postimg.cc/jdFBJdQb/1027-t55-dam-05-08-23.jpg" },
+            { "ID": "8", "Model": "T-55A Obr. 1981", "Category": "Destroyed", "Date": "2024-09-15", "Image": "", "Image URL": "https://i.postimg.cc/d0yGQ3Qk/1018-T-55-A-Obr-1981-destr-15-09-24.jpg" },
+            { "ID": "9", "Model": "Unknown T-54/55", "Category": "Destroyed", "Date": "2023-06-18", "Image": "", "Image URL": "https://x.com/CalibreObscura/status/1670510694838546436" },
+            { "ID": "10", "Model": "Unknown T-54/55", "Category": "Destroyed", "Date": "2024-03-28", "Image": "", "Image URL": "https://i.postimg.cc/3RPYPYV5/1006-unkn-t55-destr-28-03-24.jpg" },
+            { "ID": "11", "Model": "Unknown T-54/55", "Category": "Destroyed", "Date": "2024-06-27", "Image": "", "Image URL": "https://i.postimg.cc/ZYFMJhb0/1045-T-54-or-55-destr-27-06-24.jpg" },
+            { "ID": "12", "Model": "Unknown T-54/55", "Category": "Damaged, Abandoned", "Date": "2024-02-17", "Image": "", "Image URL": "https://i.postimg.cc/pTqMF7mQ/1081-unkn-t54-55-dam-aband-17-02-24.jpg" },
+            { "ID": "13", "Model": "Unknown T-54/55", "Category": "Damaged, Abandoned", "Date": "2024-03-31", "Image": "", "Image URL": "https://i.postimg.cc/KjbMBZLR/1106-unkn-t54-55-dam-aband-31-03-24.jpg" },
+            { "ID": "14", "Model": "T-62 Obr. 1967", "Category": "Destroyed", "Date": "2024-02-11", "Image": "", "Image URL": "https://i.postimg.cc/65Tqk5t6/1021-T-62-Obr-1967-destr-11-02-24.jpg" },
+            { "ID": "15", "Model": "T-62 Obr. 1967", "Category": "Destroyed", "Date": "nan", "Image": "", "Image URL": "https://i.postimg.cc/52vJB77X/1014-t62-obr1967.jpg" },
+            { "ID": "16", "Model": "T-62 Obr. 1967", "Category": "Destroyed", "Date": "2024-09-29", "Image": "", "Image URL": "https://i.postimg.cc/26dvvtZC/1020-T-62-Obr-1967-destr-29-09-24.jpg" },
+            { "ID": "17", "Model": "T-62 Obr. 1967", "Category": "Destroyed", "Date": "2024-10-09", "Image": "", "Image URL": "https://i.postimg.cc/xT6m6jRd/1023-T-62-M-destr-09-10-24.jpg" },
+            { "ID": "18", "Model": "T-62 Obr. 1967", "Category": "Captured", "Date": "2022-11-13", "Image": "", "Image URL": "https://i.postimg.cc/yxw0SFD6/1001-T-62-Obr-1967-capt.jpg" },
+            { "ID": "19", "Model": "T-62 Obr. 1972", "Category": "Destroyed", "Date": "2024-03-01", "Image": "", "Image URL": "https://i.postimg.cc/zfqr10Kw/1044-t62-obr1967-destr-01-03-24.jpg" },
+            { "ID": "20", "Model": "T-62 Obr. 1972", "Category": "Abandoned", "Date": "2023-12-10", "Image": "", "Image URL": "https://i.postimg.cc/4N95JpPv/1035-T-62-Obr-1972-aband-10-12-23.jpg" },
+            { "ID": "21", "Model": "T-62M", "Category": "Destroyed", "Date": "2022-07-06", "Image": "", "Image URL": "https://x.com/UAWeapons/status/1544797070883684353" },
+            { "ID": "22", "Model": "T-62M", "Category": "Destroyed", "Date": "2023-01-11", "Image": "", "Image URL": "https://i.postimg.cc/X72RXDmM/1024-t62m-destr-11-01-23.jpg" },
+            { "ID": "23", "Model": "T-62M", "Category": "Destroyed", "Date": "2022-09-21", "Image": "", "Image URL": "https://pbs.twimg.com/media/FdNA-bKX0AwduHu?format=jpg&name=large" },
+            { "ID": "24", "Model": "T-62M", "Category": "Destroyed", "Date": "2022-10-17", "Image": "", "Image URL": "https://x.com/PolymarketIntel/status/1581908407967092738" },
+            { "ID": "25", "Model": "T-62M", "Category": "Destroyed", "Date": "2022-11-09", "Image": "", "Image URL": "https://x.com/UAWeapons/status/1590474674999558145" },
+            { "ID": "26", "Model": "T-62M", "Category": "Destroyed", "Date": "2022-12-08", "Image": "", "Image URL": "https://i.postimg.cc/fy6S2qj0/1010-2x-t62m-destr.jpg" },
+            { "ID": "27", "Model": "T-62M", "Category": "Destroyed", "Date": "2022-12-08", "Image": "", "Image URL": "https://i.postimg.cc/fy6S2qj0/1010-2x-t62m-destr.jpg" },
+            { "ID": "28", "Model": "T-62M", "Category": "Destroyed", "Date": "2022-12-18", "Image": "", "Image URL": "https://i.postimg.cc/2yRMkB97/55h.png" },
+            { "ID": "29", "Model": "T-62M", "Category": "Destroyed", "Date": "2022-11-16", "Image": "", "Image URL": "https://i.postimg.cc/gkKRT9Sn/1014-t62m-destr-16-11-22.jpg" },
+            { "ID": "30", "Model": "T-62M", "Category": "Destroyed", "Date": "2023-01-08", "Image": "", "Image URL": "https://i.postimg.cc/cLQ5SJcX/1005-t62m-destr-08-01-23.jpg" },
+            { "ID": "31", "Model": "T-62M", "Category": "Destroyed", "Date": "2023-01-07", "Image": "", "Image URL": "https://i.postimg.cc/Dy4Mx64V/1038-t62m-destr-07-01-23.jpg" },
+            { "ID": "32", "Model": "T-62M", "Category": "Destroyed", "Date": "2023-01-27", "Image": "", "Image URL": "https://i.postimg.cc/N0DghMNG/1005-t62m-destr-27-01-23.jpg" },
+            { "ID": "33", "Model": "T-62M", "Category": "Destroyed", "Date": "2023-03-20", "Image": "", "Image URL": "https://i.postimg.cc/NFFTSxhD/1025-t62m-destr-20-03-23.jpg" },
+            { "ID": "34", "Model": "T-62M", "Category": "Destroyed", "Date": "2023-03-22", "Image": "", "Image URL": "https://x.com/PolymarketIntel/status/1638590667323580425" },
+            { "ID": "35", "Model": "T-62M", "Category": "Destroyed", "Date": "2023-05-26", "Image": "", "Image URL": "https://i.postimg.cc/KvkckFr1/1011-T-62-M-destr-26-05-23.jpg" },
+            { "ID": "36", "Model": "T-62M", "Category": "Destroyed", "Date": "2023-05-26", "Image": "", "Image URL": "https://i.postimg.cc/3Js826nn/1012-T-62-M-destr-26-05-23.jpg" },
+            { "ID": "37", "Model": "T-62M", "Category": "Destroyed", "Date": "2023-06-01", "Image": "", "Image URL": "https://i.postimg.cc/Gmr6pZ4Y/1001-t62m-destr-01-06-23.jpg" },
+            { "ID": "38", "Model": "T-62M", "Category": "Destroyed", "Date": "2022-09-04", "Image": "", "Image URL": "https://x.com/PolymarketIntel/status/1566557906593615873" },
+            { "ID": "39", "Model": "T-62M", "Category": "Destroyed", "Date": "2022-09-04", "Image": "", "Image URL": "https://x.com/PolymarketIntel/status/1566557906593615873" },
+            { "ID": "40", "Model": "T-62M", "Category": "Destroyed", "Date": "2022-11-09", "Image": "", "Image URL": "https://i.postimg.cc/Dw3GQ3mg/1026-T-62-M-destr-09-11-22.jpg" },
+            { "ID": "41", "Model": "T-62M", "Category": "Destroyed", "Date": "2023-06-30", "Image": "", "Image URL": "https://x.com/PolymarketIntel/status/1674811978408132611" },
+            { "ID": "42", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-04-01", "Image": "", "Image URL": "https://i.postimg.cc/QC5sJ3t7/1074-T-62-M-destr-01-04-24.jpg" },
+            { "ID": "43", "Model": "T-62M", "Category": "Destroyed", "Date": "2023-08-11", "Image": "", "Image URL": "https://i.postimg.cc/PxJhBdpT/46.png" },
+            { "ID": "44", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-10-02", "Image": "", "Image URL": "https://i.postimg.cc/Dy4T0m9T/1045-T-62-M-destr-02-10-23.jpg" },
+            { "ID": "45", "Model": "T-62M", "Category": "Destroyed", "Date": "2023-11-29", "Image": "", "Image URL": "https://i.postimg.cc/Hsm7xWy2/1011-t62m-destr-29-11-23.jpg" },
+            { "ID": "46", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-01-09", "Image": "", "Image URL": "https://i.postimg.cc/qMV8j4c4/1039-t62m-destr-09-01-24.jpg" },
+            { "ID": "47", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-01-29", "Image": "", "Image URL": "https://i.postimg.cc/Jng1mWHk/1021-T-62-M-destr-29-01-24.jpg" },
+            { "ID": "48", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-01-29", "Image": "", "Image URL": "https://i.postimg.cc/mgGgtRX3/1022-T-62-M-destr-29-01-24.jpg" },
+            { "ID": "49", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-01-29", "Image": "", "Image URL": "https://i.postimg.cc/jSQdf9mp/1023-T-62-M-destr-29-01-24.jpg" },
+            { "ID": "50", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-02-12", "Image": "", "Image URL": "https://i.postimg.cc/Jz37Mw8R/1037-t62m-destr-12-02-24.jpg" },
+            { "ID": "51", "Model": "T-62M", "Category": "Destroyed", "Date": "2023-02-06", "Image": "", "Image URL": "https://i.postimg.cc/q7Znqz75/1026-1x-destr-2x-dam-aband-T62-M-06-02-23.jpg" },
+            { "ID": "52", "Model": "T-62M", "Category": "Destroyed", "Date": "2023-02-11", "Image": "", "Image URL": "https://i.postimg.cc/QCz881h8/1020-T-62-M-destr-11-02-23.jpg" },
+            { "ID": "53", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-04-18", "Image": "", "Image URL": "https://i.postimg.cc/kgtWhdNy/1054-t62m-destr-18-04-24.jpg" },
+            { "ID": "54", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-04-22", "Image": "", "Image URL": "https://i.postimg.cc/bwjW4qxb/1111-T-62-M-destr-22-04-24.jpg" },
+            { "ID": "55", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-04-21", "Image": "", "Image URL": "https://i.postimg.cc/3RSGbCC9/1004-T-62-M-destr-21-04-24.jpg" },
+            { "ID": "56", "Model": "T-62M", "Category": "Destroyed", "Date": "2022-11-30", "Image": "", "Image URL": "https://i.postimg.cc/sxbh3jLh/1023-T-62-M-destr-30-11-22.jpg" },
+            { "ID": "57", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-05-14", "Image": "", "Image URL": "https://i.postimg.cc/j2S2L1rj/1064-unkn-t62-destr-14-05-24.jpg" },
+            { "ID": "58", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-06-02", "Image": "", "Image URL": "https://i.postimg.cc/25gfXBQ5/1051-T-62-M-destr-02-06-24.jpg" },
+            { "ID": "59", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-06-02", "Image": "", "Image URL": "https://i.postimg.cc/PJjndsFs/1052-T-62-M-destr-02-06-24.jpg" },
+            { "ID": "60", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-06-08", "Image": "", "Image URL": "https://i.postimg.cc/6Q3S3HG4/1077-T-62-M-destr-08-06-24.jpg" },
+            { "ID": "61", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-06-12", "Image": "", "Image URL": "https://i.postimg.cc/LXFkb3Jk/1062-T-62-M-destr-12-06-24.jpg" },
+            { "ID": "62", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-06-15", "Image": "", "Image URL": "https://i.postimg.cc/d1nw7hWn/1002-T-62-M-destr-15-06-24.jpg" },
+            { "ID": "63", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-07-01", "Image": "", "Image URL": "https://i.postimg.cc/sx8NkBbd/1101-t62m-destr-01-07-24.jpg" },
+            { "ID": "64", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-07-11", "Image": "", "Image URL": "https://i.postimg.cc/C1PgyV8J/1100-t62m-destr-11-07-24.jpg" },
+            { "ID": "65", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-07-07", "Image": "", "Image URL": "https://i.postimg.cc/kgwGMGkv/1016-T-62-M-destr-07-07-24.jpg" },
+            { "ID": "66", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-02-29", "Image": "", "Image URL": "https://i.postimg.cc/c4QwLvFh/1057-T-62-M-destr-29-02-24.jpg" },
+            { "ID": "67", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-07-13", "Image": "", "Image URL": "https://i.postimg.cc/Bbf3mFRh/1002-T-62-M-destr-13-07-24.jpg" },
+            { "ID": "68", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-07-19", "Image": "", "Image URL": "https://i.postimg.cc/hv7j6SPq/1027-T-62-M-destr-19-07-24.jpg" },
+            { "ID": "69", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-07-17", "Image": "", "Image URL": "https://i.postimg.cc/76hb13Fh/1019-t62m-destr-17-07-24.jpg" },
+            { "ID": "70", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-07-23", "Image": "", "Image URL": "https://i.postimg.cc/4xZ1v2Kz/1100-t62m-destr-23-07-24.jpg" },
+            { "ID": "71", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-07-23", "Image": "", "Image URL": "https://i.postimg.cc/NFkZb9xD/1010-T-62-M-destr-23-07-24.jpg" },
+            { "ID": "72", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-07-23", "Image": "", "Image URL": "https://i.postimg.cc/BZFSHmfZ/1009-T-62-M-destr-23-07-24.jpg" },
+            { "ID": "73", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-07-23", "Image": "", "Image URL": "https://i.postimg.cc/KvyZNtmP/1015-T-62-M-destr-23-07-24.jpg" },
+            { "ID": "74", "Model": "T-62M", "Category": "Destroyed", "Date": "2025-01-05", "Image": "", "Image URL": "https://i.postimg.cc/Vs76jzB7/1059-T-62-M-destr-05-01-25.jpg" },
+            { "ID": "75", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-07-26", "Image": "", "Image URL": "https://i.postimg.cc/sxx8GncF/1051-T-62-M-destr-26-07-24.jpg" },
+            { "ID": "76", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-08-06", "Image": "", "Image URL": "https://i.postimg.cc/8C8mLjDW/1025-T-62-M-destr-06-08-24.jpg" },
+            { "ID": "77", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-08-21", "Image": "", "Image URL": "https://i.postimg.cc/bYnvM782/1023-T-62-M-destr-21-08-24.jpg" },
+            { "ID": "78", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-06-13", "Image": "", "Image URL": "https://i.postimg.cc/brRZDFKF/1108-unkn-t62-destr-13-06-24.jpg" },
+            { "ID": "79", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-09-22", "Image": "", "Image URL": "https://i.postimg.cc/CL6ss7Td/1049-T-62-M-destr-22-09-24.jpg" },
+            { "ID": "80", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-09-25", "Image": "", "Image URL": "https://i.postimg.cc/8Ps3sxVB/1004-T-62-M-destr-25-09-24.jpg" },
+            { "ID": "81", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-10-05", "Image": "", "Image URL": "https://i.postimg.cc/RFWRQ0pN/1045-T-62-M-destr-05-10-24.jpg" },
+            { "ID": "82", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-10-06", "Image": "", "Image URL": "https://i.postimg.cc/3xfqX4LZ/1075-T-62-M-destr-06-10-24.jpg" },
+            { "ID": "83", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-09-13", "Image": "", "Image URL": "https://i.postimg.cc/BQgkvwHk/1082-T-62-M-destr-13-09-24.jpg" },
+            { "ID": "84", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-10-16", "Image": "", "Image URL": "https://i.postimg.cc/XqKhdshZ/1182-T-62-M-destr-16-10-24.jpg" },
+            { "ID": "85", "Model": "T-62M", "Category": "Destroyed", "Date": "2023-11-11", "Image": "", "Image URL": "https://i.postimg.cc/Y2QT5S9p/1194-T-62-M-destr-11-11-23.jpg" },
+            { "ID": "86", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-10-18", "Image": "", "Image URL": "https://i.postimg.cc/cCG2vpDy/1244-T-62-M-destr-18-10-24.jpg" },
+            { "ID": "87", "Model": "T-62M", "Category": "Destroyed", "Date": "2025-01-15", "Image": "", "Image URL": "https://i.postimg.cc/Pr5WqkTc/1101-T-62-M-destr-15-01-25.jpg" },
+            { "ID": "88", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-10-27", "Image": "", "Image URL": "https://i.postimg.cc/rFtgXJN9/1060-T-62-M-destr-27-10-24.jpg" },
+            { "ID": "89", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-11-22", "Image": "", "Image URL": "https://i.postimg.cc/YCXN8dc9/1016-T-62-M-destr-22-11-24.jpg" },
+            { "ID": "90", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-11-27", "Image": "", "Image URL": "https://i.postimg.cc/RqryZrZR/1025-T-62-M-destr-27-11-24.jpg" },
+            { "ID": "91", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-11-30", "Image": "", "Image URL": "https://i.postimg.cc/gkC5d82X/1007-T-62-M-destr-30-11-24.jpg" },
+            { "ID": "92", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-08-31", "Image": "", "Image URL": "https://i.postimg.cc/R0Q7Npgr/1007-T-62-M-destr-31-08-24.jpg" },
+            { "ID": "93", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-12-26", "Image": "", "Image URL": "https://i.postimg.cc/TY6gdKDr/1104-T-62-M-destr-26-12-24.jpg" },
+            { "ID": "94", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-12-31", "Image": "", "Image URL": "https://i.postimg.cc/ncb9fxcj/1015-T-62-M-destr-31-12-24.jpg" },
+            { "ID": "95", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-12-31", "Image": "", "Image URL": "https://i.postimg.cc/RZZ7qvQV/1038-T-62-M-destr-31-12-24.jpg" },
+            { "ID": "96", "Model": "T-62M", "Category": "Destroyed", "Date": "2025-01-22", "Image": "", "Image URL": "https://i.postimg.cc/ZKcPTWNM/1045-T-62-M-destr-22-01-25.jpg" },
+            { "ID": "97", "Model": "T-62M", "Category": "Destroyed", "Date": "2024-09-25", "Image": "", "Image URL": "https://i.postimg.cc/XvKXRrq9/1103-T-62-M-destr-25-09-24.jpg" },
+            { "ID": "98", "Model": "T-62M", "Category": "Destroyed", "Date": "2025-02-07", "Image": "", "Image URL": "https://i.postimg.cc/k472XVQ6/1022-T-62-M-destr-07-02-25.jpg" },
+            { "ID": "99", "Model": "T-62M", "Category": "Destroyed", "Date": "2025-01-27", "Image": "", "Image URL": "https://i.postimg.cc/Znb1K3PP/1033-T-62-M-destr-27-01-25.jpg" },
+            { "ID": "100", "Model": "T-62M", "Category": "Destroyed", "Date": "2025-02-19", "Image": "", "Image URL": "https://i.postimg.cc/bwYZbfD9/1107-T-62-M-destr-19-02-25.jpg" },
+            { "ID": "101", "Model": "T-62M", "Category": "Damaged", "Date": "2022-11-09", "Image": "", "Image URL": "https://x.com/PolymarketIntel/status/1590474674999558145" },
+            { "ID": "102", "Model": "T-62M", "Category": "Damaged", "Date": "2023-03-09", "Image": "", "Image URL": "https://i.postimg.cc/QC25V0xC/1004-3-destr-BMP-2-2-destr-Kam-AZ-6x6-4-damaged-T-62-M-09-03-23.jpg" },
+            { "ID": "103", "Model": "T-62M", "Category": "Damaged", "Date": "2023-03-09", "Image": "", "Image URL": "https://i.postimg.cc/QC25V0xC/1004-3-destr-BMP-2-2-destr-Kam-AZ-6x6-4-damaged-T-62-M-09-03-23.jpg" },
+            { "ID": "104", "Model": "T-62M", "Category": "Damaged", "Date": "2023-03-09", "Image": "", "Image URL": "https://i.postimg.cc/QC25V0xC/1004-3-destr-BMP-2-2-destr-Kam-AZ-6x6-4-damaged-T-62-M-09-03-23.jpg" },
+            { "ID": "105", "Model": "T-62M", "Category": "Damaged", "Date": "2023-03-09", "Image": "", "Image URL": "https://i.postimg.cc/QC25V0xC/1004-3-destr-BMP-2-2-destr-Kam-AZ-6x6-4-damaged-T-62-M-09-03-23.jpg" },
+            { "ID": "106", "Model": "T-62M", "Category": "Damaged", "Date": "2022-11-09", "Image": "", "Image URL": "https://i.postimg.cc/DzKczbq7/1025-T-62-M-dam-09-11-22.jpg" },
+            { "ID": "107", "Model": "T-62M", "Category": "Damaged", "Date": "2024-03-18", "Image": "", "Image URL": "https://i.postimg.cc/C17RhWt3/1105-t62m-dam-18-03-24.jpg" },
+            { "ID": "108", "Model": "T-62M", "Category": "Damaged", "Date": "2024-04-06", "Image": "", "Image URL": "https://i.postimg.cc/Wpn8MjSF/1006-T-62-M-dam-06-04-24.jpg" },
+            { "ID": "109", "Model": "T-62M", "Category": "Damaged", "Date": "2024-09-13", "Image": "", "Image URL": "https://i.postimg.cc/85J24WHX/1021-T-62-M-dam-13-09-24.jpg" },
+            { "ID": "110", "Model": "T-62M", "Category": "Damaged, Abandoned", "Date": "2023-12-21", "Image": "", "Image URL": "https://i.postimg.cc/Jzf348Lr/1021-t62m-dam-aband-21-12-23.jpg" },
+            { "ID": "111", "Model": "T-62M", "Category": "Damaged, Abandoned", "Date": "2024-02-12", "Image": "", "Image URL": "https://i.postimg.cc/XvQVBwXh/1036-T-62-M-dam-aband-12-02-24.jpg" },
+            { "ID": "112", "Model": "T-62M", "Category": "Damaged, Abandoned", "Date": "2023-02-06", "Image": "", "Image URL": "https://i.postimg.cc/q7Znqz75/1026-1x-destr-2x-dam-aband-T62-M-06-02-23.jpg" },
+            { "ID": "113", "Model": "T-62M", "Category": "Damaged, Abandoned", "Date": "2024-06-02", "Image": "", "Image URL": "https://i.postimg.cc/Gm7wrvPR/1002-T-62-M-dam-aband-02-06-24.jpg" },
+            { "ID": "114", "Model": "T-62M", "Category": "Abandoned", "Date": "2024-02-06", "Image": "", "Image URL": "https://i.postimg.cc/XX64Gc8N/1054-T-80-BV-aband-06-02-24.jpg" },
+            { "ID": "115", "Model": "T-62M", "Category": "Abandoned", "Date": "2024-01-30", "Image": "", "Image URL": "https://i.postimg.cc/Y2FHQvCF/1105-T-62-M-aband-30-01-24.jpg" },
+            { "ID": "116", "Model": "T-62M", "Category": "Captured", "Date": "2022-09-14", "Image": "", "Image URL": "https://pbs.twimg.com/media/Fcn0bXuXoAAHKCV?format=jpg&name=large" },
+            { "ID": "117", "Model": "T-62M", "Category": "Captured", "Date": "2022-10-03", "Image": "", "Image URL": "https://i.postimg.cc/pdNwMqJq/4500-t62m-capt.jpg" },
+            { "ID": "118", "Model": "T-62M", "Category": "Captured", "Date": "2022-10-04", "Image": "", "Image URL": "https://pbs.twimg.com/media/FeNvZ93XEAI5Eum?format=jpg&name=large" },
+            { "ID": "119", "Model": "T-62M", "Category": "Captured", "Date": "2022-10-04", "Image": "", "Image URL": "https://pbs.twimg.com/media/FePHoJmWAAIBkxc?format=jpg&name=medium" },
+            { "ID": "120", "Model": "T-62M", "Category": "Captured", "Date": "2022-10-04", "Image": "", "Image URL": "https://pbs.twimg.com/media/FeNNn5EX0AA6d2m?format=jpg&name=large" },
+            { "ID": "121", "Model": "T-62M", "Category": "Captured", "Date": "2022-10-05", "Image": "", "Image URL": "https://pbs.twimg.com/media/FeTsT3NWIAMt8R1?format=jpg&name=medium" },
+            { "ID": "122", "Model": "T-62M", "Category": "Captured", "Date": "2022-10-05", "Image": "", "Image URL": "https://pbs.twimg.com/media/FeSX1ZZWQAA4Ur0?format=jpg&name=large" },
+            { "ID": "123", "Model": "T-62M", "Category": "Captured, Damaged", "Date": "2022-10-05", "Image": "", "Image URL": "https://x.com/PolymarketIntel/status/1577556971389075459" },
+            { "ID": "124", "Model": "T-62M", "Category": "Captured", "Date": "2022-10-05", "Image": "", "Image URL": "https://pbs.twimg.com/media/FeUS7oWXEAAafMP?format=jpg&name=large" },
+            { "ID": "125", "Model": "T-62M", "Category": "Captured", "Date": "2022-10-06", "Image": "", "Image URL": "https://i.postimg.cc/wMqmL10f/1007-t62m-capt.jpg" },
+            { "ID": "126", "Model": "T-62M", "Category": "Captured", "Date": "2022-10-06", "Image": "", "Image URL": "https://x.com/PolymarketIntel/status/1578010258152251392" },
+            { "ID": "127", "Model": "T-62M", "Category": "Captured", "Date": "2022-10-07", "Image": "", "Image URL": "https://x.com/PolymarketIntel/status/1578303114742235137" },
+            { "ID": "128", "Model": "T-62M", "Category": "Captured, Damaged", "Date": "2023-01-25", "Image": "", "Image URL": "https://i.postimg.cc/bJ7wHhYW/4477.png" },
+            { "ID": "129", "Model": "T-62M", "Category": "Captured", "Date": "2023-01-24", "Image": "", "Image URL": "https://i.postimg.cc/YCYjXjLR/66988.png" },
+            { "ID": "130", "Model": "T-62M", "Category": "Captured", "Date": "2022-10-08", "Image": "", "Image URL": "https://i.postimg.cc/d3dtQwnV/33.png" },
+            { "ID": "131", "Model": "T-62M", "Category": "Captured", "Date": "2022-10-09", "Image": "", "Image URL": "https://i.postimg.cc/MHchSZQ2/1030-t62m-capt.jpg" },
+            { "ID": "132", "Model": "T-62M", "Category": "Captured", "Date": "2022-10-11", "Image": "", "Image URL": "https://i.postimg.cc/1X70dZDm/1039-t62m-capt.jpg" },
+            { "ID": "133", "Model": "T-62M", "Category": "Captured", "Date": "2022-10-11", "Image": "", "Image URL": "https://i.postimg.cc/pTZJDjTn/1040-t62m-capt.jpg" },
+            { "ID": "134", "Model": "T-62M", "Category": "Captured", "Date": "2022-11-25", "Image": "", "Image URL": "https://i.postimg.cc/sxXST942/1018-t62m-capt-25-11-22.jpg" },
+            { "ID": "135", "Model": "T-62M", "Category": "Captured", "Date": "2022-10-12", "Image": "", "Image URL": "https://i.postimg.cc/mkKvpRHm/1010-t62m-capt.jpg" },
+            { "ID": "136", "Model": "T-62M", "Category": "Captured", "Date": "2022-10-14", "Image": "", "Image URL": "https://i.postimg.cc/wMKK0gJ0/1053-t62m-capt.jpg" },
+            { "ID": "137", "Model": "T-62M", "Category": "Captured", "Date": "2022-10-15", "Image": "", "Image URL": "https://i.postimg.cc/4dB8SySp/1011-t62m-capt.jpg" },
+            { "ID": "138", "Model": "T-62M", "Category": "Captured", "Date": "2022-10-18", "Image": "", "Image URL": "https://i.postimg.cc/8zs9wPz4/1018-t62m-capt.jpg" },
+            { "ID": "139", "Model": "T-62M", "Category": "Captured", "Date": "2022-10-28", "Image": "", "Image URL": "https://i.postimg.cc/TPRdPNxj/1003-t62m-capt.jpg" },
+            { "ID": "140", "Model": "T-62M", "Category": "Captured, Damaged", "Date": "2022-11-09", "Image": "", "Image URL": "https://pbs.twimg.com/media/FhJnqqFXoAQK3dL?format=jpg&name=large" },
+            { "ID": "141", "Model": "T-62M", "Category": "Captured", "Date": "2022-11-11", "Image": "", "Image URL": "https://pbs.twimg.com/media/FhR_OWUWYAEMlz_?format=jpg&name=large" },
+            { "ID": "142", "Model": "T-62M", "Category": "Captured", "Date": "2022-11-11", "Image": "", "Image URL": "https://i.postimg.cc/kXjchcHX/875.png" },
+            { "ID": "143", "Model": "T-62M", "Category": "Captured", "Date": "2022-11-13", "Image": "", "Image URL": "https://i.postimg.cc/R9CTxsTy/1026-t62m-capt.jpg" },
+            { "ID": "144", "Model": "T-62M", "Category": "Captured, Damaged", "Date": "2022-11-13", "Image": "", "Image URL": "https://pbs.twimg.com/media/Fhc9eJxX0AEioIh?format=jpg&name=large" },
+            { "ID": "145", "Model": "T-62M", "Category": "Captured, Damaged", "Date": "2022-11-15", "Image": "", "Image URL": "https://i.postimg.cc/SNKbZnT3/1015-t62m-dam-capt.jpg" },
+            { "ID": "146", "Model": "T-62M", "Category": "Captured", "Date": "2022-11-15", "Image": "", "Image URL": "https://i.postimg.cc/wMqYYM6t/1011-t62m-capt.jpg" },
+            { "ID": "147", "Model": "T-62M", "Category": "Captured", "Date": "2022-11-25", "Image": "", "Image URL": "https://i.postimg.cc/3RSgKWBp/33211.png" },
+            { "ID": "148", "Model": "T-62M", "Category": "Captured", "Date": "2022-10-06", "Image": "", "Image URL": "https://i.postimg.cc/ydNdM2S1/1017-t62m-capt-06-10-22.jpg" },
+            { "ID": "149", "Model": "T-62M", "Category": "Captured", "Date": "2024-06-17", "Image": "", "Image URL": "https://i.postimg.cc/DZC3vtZM/1033-T-62-M-capt-17-06-24.jpg" },
+            { "ID": "150", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2023-03-15", "Image": "", "Image URL": "https://i.postimg.cc/fy03yn64/1001-t62m-2022-destr-15-03-23.png" },
+            { "ID": "151", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2023-03-15", "Image": "", "Image URL": "https://x.com/PolymarketIntel/status/1635951246069702656" },
+            { "ID": "152", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2023-11-01", "Image": "", "Image URL": "https://i.postimg.cc/fTLFbBc3/1000-t62m-obr2022-destr-01-11-23.jpg" },
+            { "ID": "153", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2023-12-25", "Image": "", "Image URL": "https://i.postimg.cc/Dy8vHhRg/1042-T-62-M-Obr-2022-destr-25-12-23.jpg" },
+            { "ID": "154", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2024-03-05", "Image": "", "Image URL": "https://i.postimg.cc/mghnBMRZ/1016-T-62-M-Obr-2022-destr-05-03-24.jpg" },
+            { "ID": "155", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2024-03-09", "Image": "", "Image URL": "https://i.postimg.cc/gj79MZqn/1066-T-62-M-Obr2022-destr-09-03-24.jpg" },
+            { "ID": "156", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2024-04-30", "Image": "", "Image URL": "https://i.postimg.cc/0NhncjPj/1006-T62-M-Obr2022-destr-30-04-24.jpg" },
+            { "ID": "157", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2024-05-27", "Image": "", "Image URL": "https://i.postimg.cc/WpCmjKnQ/1047-T-62-M-Obr-2022-destr-27-05-24.jpg" },
+            { "ID": "158", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2024-06-02", "Image": "", "Image URL": "https://i.postimg.cc/9fDhpBqS/1054-T-62-M-Obr-2022-destr-02-06-24.jpg" },
+            { "ID": "159", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2024-04-29", "Image": "", "Image URL": "https://i.postimg.cc/Kv3kh3LK/1029-T-62-M-Obr-2022-destr-29-04-24.jpg" },
+            { "ID": "160", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2024-06-28", "Image": "", "Image URL": "https://i.postimg.cc/N0YX9jdB/1001-T-62-M-Obr-2022-destr-28-06-24.jpg" },
+            { "ID": "161", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2024-08-10", "Image": "", "Image URL": "https://i.postimg.cc/sghb8hXz/1019-T-62-M-Obr-2022-destr-10-08-24.jpg" },
+            { "ID": "162", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2024-08-29", "Image": "", "Image URL": "https://i.postimg.cc/jqJvt7kH/1000-T-62-M-Obr-2022-destr-29-08-24.jpg" },
+            { "ID": "163", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2024-06-10", "Image": "", "Image URL": "https://i.postimg.cc/zDLdFFm0/1100-unkn-t62-destr-10-06-24.jpg" },
+            { "ID": "164", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2024-09-15", "Image": "", "Image URL": "https://i.postimg.cc/8z1R3zbR/1003-T-62-M-Obr-2022-destr-15-09-24.jpg" },
+            { "ID": "165", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2024-09-23", "Image": "", "Image URL": "https://i.postimg.cc/Hx4t0CdC/1010-T-62-M-Obr-2022-destr-23-09-24.jpg" },
+            { "ID": "166", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2024-09-01", "Image": "", "Image URL": "https://i.postimg.cc/3J6qG98M/1008-T-62-M-Obr-2022-destr-01-09-24.jpg" },
+            { "ID": "167", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2024-10-05", "Image": "", "Image URL": "https://i.postimg.cc/dtvgwKkG/1141-T-62-M-Obr-2022-destr-05-10-24.jpg" },
+            { "ID": "168", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2024-10-18", "Image": "", "Image URL": "https://i.postimg.cc/tg7Lwt1f/1246-T-62-M-Obr-2022-destr-18-10-24.jpg" },
+            { "ID": "169", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2024-10-26", "Image": "", "Image URL": "https://i.postimg.cc/0j6ky0Rd/1101-T-62-M-Obr-2022-destr26-10-24.jpg" },
+            { "ID": "170", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2024-10-28", "Image": "", "Image URL": "https://i.postimg.cc/7Zb2dvsn/1022-T-62-M-Obr-2022-destr-28-10-24.jpg" },
+            { "ID": "171", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2024-11-18", "Image": "", "Image URL": "https://i.postimg.cc/J0CGM1XS/1004-T-62-M-Obr-2022-destr-18-11-24.jpg" },
+            { "ID": "172", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2024-11-25", "Image": "", "Image URL": "https://i.postimg.cc/gjbKBMM9/1103-T-62-M-Obr-2022-destr-25-11-24.jpg" },
+            { "ID": "173", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2024-11-14", "Image": "", "Image URL": "https://i.postimg.cc/NfhvdgmD/1016-T-62-M-Obr-2022-destr-14-11-24.jpg" },
+            { "ID": "174", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2024-11-03", "Image": "", "Image URL": "https://i.postimg.cc/Gm3JkZ5V/1051-T-62-M-Obr-2022-destr-03-11-24.jpg" },
+            { "ID": "175", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2024-12-03", "Image": "", "Image URL": "https://i.postimg.cc/6qg1ftZX/1028-T-62-M-Obr-2022-destr-03-12-24.jpg" },
+            { "ID": "176", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2024-12-03", "Image": "", "Image URL": "https://i.postimg.cc/4d80nzNn/1035-T-62-M-Obr-2022-destr-03-12-24.jpg" },
+            { "ID": "177", "Model": "Unknown T-54/55", "Category": "Destroyed", "Date": "2025-03-01", "Image": "", "Image URL": "https://i.postimg.cc/sD6gn73J/1120-T-54-or-55-destr-28-02-25.jpg" },
+            { "ID": "178", "Model": "T-62M", "Category": "Destroyed", "Date": "2025-03-21", "Image": "", "Image URL": "https://i.postimg.cc/j2MttjkG/1053-T-62-M-destr-21-03-25.jpg" },
+            { "ID": "179", "Model": "T-62M", "Category": "Destroyed", "Date": "2025-04-03", "Image": "", "Image URL": "https://i.postimg.cc/kGm0xYbJ/1111-T-62-M-destr-03-04-25.jpg" },
+            { "ID": "180", "Model": "T-62M", "Category": "Damaged, Abandoned", "Date": "2025-01-10", "Image": "", "Image URL": "https://i.postimg.cc/Prcp2QRb/1411-T-62-M-dam-aband-10-01-25.jpg" },
+            { "ID": "181", "Model": "T-62M", "Category": "Damaged, Abandoned", "Date": "2025-03-04", "Image": "", "Image URL": "https://i.postimg.cc/7PN62jcd/1067-T-62-M-dam-aband-04-03-25.jpg" },
+            { "ID": "182", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2024-12-28", "Image": "", "Image URL": "https://i.postimg.cc/W3dQc10Q/1003-T-62-M-Obr-2022-destr-28-12-24.jpg" },
+            { "ID": "183", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2024-11-30", "Image": "", "Image URL": "https://i.postimg.cc/pLRRBGyx/1007-T-62-M-Obr-2022-destr-30-11-24.jpg" },
+            { "ID": "184", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2024-09-27", "Image": "", "Image URL": "https://i.postimg.cc/LXN5sGzX/1102-T-62-M-Obr-2022-destr-27-09-24.jpg" },
+            { "ID": "185", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2025-01-14", "Image": "", "Image URL": "https://i.postimg.cc/gJRSSdtW/1025-T-62-M-Obr-2022-destr-14-01-25.jpg" },
+            { "ID": "186", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2025-01-20", "Image": "", "Image URL": "https://i.postimg.cc/5ysDH0ph/1020-T-62-M-Obr-2022-destr-20-01-25.jpg" },
+            { "ID": "187", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2025-03-10", "Image": "", "Image URL": "https://i.postimg.cc/655QLYx3/1002-T-62-M-Obr-2022-destr-10-03-25.jpg" },
+            { "ID": "188", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2023-12-01", "Image": "", "Image URL": "https://i.postimg.cc/cLv4PCHG/1003-T-62-M-Obr-2022-destr-01-12-23.jpg" },
+            { "ID": "189", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2025-03-19", "Image": "", "Image URL": "https://i.postimg.cc/x8fnwmgv/1011-T-62-M-Obr-2022-destr-19-03-25.jpg" },
+            { "ID": "190", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2025-04-08", "Image": "", "Image URL": "https://i.postimg.cc/Gh2zXM4m/1035-T-62-M-Obr-2022-destr-08-04-25.jpg" },
+            { "ID": "191", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2025-04-09", "Image": "", "Image URL": "https://i.postimg.cc/5tDtvbsL/1061-T-62-M-Obr-2022-destr-09-04-25.jpg" },
+            { "ID": "192", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2025-02-23", "Image": "", "Image URL": "https://i.postimg.cc/qMz7wW1p/1036-T-62-M-Obr-2022-destr-23-02-25.jpg" },
+            { "ID": "193", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2025-02-25", "Image": "", "Image URL": "https://i.postimg.cc/NfSjzbnm/1035-T-62-M-Obr-2022-destr-25-02-25.jpg" },
+            { "ID": "194", "Model": " T-62M Obr. 2022", "Category": "Destroyed", "Date": "2024-11-10", "Image": "", "Image URL": "https://i.postimg.cc/VktmmtfD/1006-T-62-M-Obr-2022-destr-10-11-24.jpg" },
+            { "ID": "195", "Model": " T-62M Obr. 2022", "Category": "Damaged", "Date": "2023-11-16", "Image": "", "Image URL": "https://i.postimg.cc/pT68MBGL/1025-t62m-2022-dam-16-11-23.jpg" },
+            { "ID": "196", "Model": " T-62M Obr. 2022", "Category": "Damaged", "Date": "2024-05-28", "Image": "", "Image URL": "https://i.postimg.cc/RF01Vx2z/1018-T-62-M-Obr-2022-dam-28-05-24.jpg" },
+            { "ID": "197", "Model": " T-62M Obr. 2022", "Category": "Abandoned", "Date": "2023-11-24", "Image": "", "Image URL": "https://i.postimg.cc/Pr1rDf8q/1008-T-62-M-Obr-2022-aband-24-11-23.jpg" },
+            { "ID": "198", "Model": " T-62M Obr. 2022", "Category": "Abandoned", "Date": "2023-12-27", "Image": "", "Image URL": "https://i.postimg.cc/9XBBZf4p/1006-T-62-MV-Obr2022-aband-27-12-23.jpg" },
+            { "ID": "199", "Model": " T-62M Obr. 2022", "Category": "Damaged, Abandoned", "Date": "2023-12-21", "Image": "", "Image URL": "https://i.postimg.cc/q7ZTxnKs/1102-T-62-M-Obr-2022-dam-aband-21-12-23.jpg" },
+            { "ID": "200", "Model": " T-62M Obr. 2022", "Category": "Captured", "Date": "2024-12-14", "Image": "", "Image URL": "https://i.postimg.cc/NjPzmt8f/1023-T-62-M-Obr-2022-capt-14-12-24.jpg" },
+            { "ID": "201", "Model": "T-62MV", "Category": "Destroyed", "Date": "2022-10-06", "Image": "", "Image URL": "https://i.postimg.cc/jSpnvgMJ/1008-t62m-destr.jpg" },
+            { "ID": "202", "Model": "T-62MV", "Category": "Destroyed", "Date": "2022-11-20", "Image": "", "Image URL": "https://i.postimg.cc/LsC6DB9t/1004-t62mv-destr.jpg" },
+            { "ID": "203", "Model": "T-62MV", "Category": "Destroyed", "Date": "2022-10-17", "Image": "", "Image URL": "https://i.postimg.cc/MpCc949Z/T-62-MV-destroyed.png" },
+            { "ID": "204", "Model": "T-62MV", "Category": "Destroyed", "Date": "2023-06-23", "Image": "", "Image URL": "https://i.postimg.cc/T11BJSZh/1036-t64mv-destr-30-06-23.jpg" },
+            { "ID": "205", "Model": "T-62MV", "Category": "Destroyed", "Date": "2023-06-28", "Image": "", "Image URL": "https://i.postimg.cc/DfLXn480/1004-t62mv-destr-28-06-23.jpg" },
+            { "ID": "206", "Model": "T-62MV", "Category": "Destroyed", "Date": "2023-12-11", "Image": "", "Image URL": "https://i.postimg.cc/YqjGfKC1/1059-t62mv-destr-11-12-23.jpg" },
+            { "ID": "207", "Model": "T-62MV", "Category": "Destroyed", "Date": "2023-07-05", "Image": "", "Image URL": "https://i.postimg.cc/YqhB8Zgz/1029-T-62-MV-destr-05-07-23.jpg" },
+            { "ID": "208", "Model": "T-62MV", "Category": "Destroyed", "Date": "2024-04-06", "Image": "", "Image URL": "https://i.postimg.cc/C1WVxjkc/1050-t62mv-destr-06-04-24.jpg" },
+            { "ID": "209", "Model": "T-62MV", "Category": "Destroyed", "Date": "2024-04-25", "Image": "", "Image URL": "https://i.postimg.cc/4d9CKP6C/1004-T-62-MV-destr-25-04-24.jpg" },
+            { "ID": "210", "Model": "T-62MV", "Category": "Destroyed", "Date": "2024-04-25", "Image": "", "Image URL": "https://i.postimg.cc/rFLTrBZf/1008-T-62-MV-destr-25-04-24.jpg" },
+            { "ID": "211", "Model": "T-62MV", "Category": "Destroyed", "Date": "2024-06-09", "Image": "", "Image URL": "https://i.postimg.cc/tgCgvkmg/1100-t62mv-destr-09-06-24.jpg" },
+            { "ID": "212", "Model": "T-62MV", "Category": "Destroyed", "Date": "2024-07-05", "Image": "", "Image URL": "https://i.postimg.cc/GmdfT45D/1048-T-62-MV-destr-05-07-24.jpg" },
+            { "ID": "213", "Model": "T-62MV", "Category": "Destroyed", "Date": "2024-07-23", "Image": "", "Image URL": "https://i.postimg.cc/65LB1TQD/1016-T-62-MV-destr-23-07-24.jpg" },
+            { "ID": "214", "Model": "T-62MV", "Category": "Destroyed", "Date": "2024-08-21", "Image": "", "Image URL": "https://i.postimg.cc/m2GrGm2p/1021-T-62-MV-destr-21-08-24.jpg" },
+            { "ID": "215", "Model": "T-62MV", "Category": "Destroyed", "Date": "2024-08-31", "Image": "", "Image URL": "https://i.postimg.cc/bNTBWhZv/1033-T-62-MV-destr-31-08-24.jpg" },
+            { "ID": "216", "Model": "T-62MV", "Category": "Destroyed", "Date": "2024-09-28", "Image": "", "Image URL": "https://i.postimg.cc/br4RZCQ3/1063-T-62-MV-Obr-2022-destr-28-09-24.jpg" },
+            { "ID": "217", "Model": "T-62MV", "Category": "Destroyed", "Date": "2024-10-02", "Image": "", "Image URL": "https://i.postimg.cc/6ppS4Lh3/1033-T-62-MV-destr-02-10-24.jpg" },
+            { "ID": "218", "Model": "T-62MV", "Category": "Destroyed", "Date": "2024-11-07", "Image": "", "Image URL": "https://i.postimg.cc/Bv5JNrqD/1057-T-62-MV-destr-07-11-24.jpg" },
+            { "ID": "219", "Model": "T-62MV", "Category": "Destroyed", "Date": "2024-12-20", "Image": "", "Image URL": "https://i.postimg.cc/LX9zfkWJ/1023-T-62-MV-destr-20-12-24.jpg" },
+            { "ID": "220", "Model": "T-62MV", "Category": "Destroyed", "Date": "2024-12-20", "Image": "", "Image URL": "https://i.postimg.cc/pT33WMZy/1002-T-62-MV-destr-20-12-24.jpg" },
+            { "ID": "221", "Model": "T-62MV", "Category": "Destroyed", "Date": "2024-12-26", "Image": "", "Image URL": "https://i.postimg.cc/BQBDXJTR/1105-T-62-MV-destr-26-12-24.jpg" },
+            { "ID": "222", "Model": "T-62MV", "Category": "Destroyed", "Date": "2025-03-15", "Image": "", "Image URL": "https://i.postimg.cc/tgPRCcWr/1188-T-62-MV-destr-15-03-25.jpg" },
+            { "ID": "223", "Model": "T-62MV", "Category": "Damaged", "Date": "2023-02-14", "Image": "", "Image URL": "https://i.postimg.cc/PrJqBtcm/1011-t62mv-dam-14-02-23.jpg" },
+            { "ID": "224", "Model": "T-62MV", "Category": "Damaged, Abandoned", "Date": "2022-10-19", "Image": "", "Image URL": "https://i.postimg.cc/xjWHFMwX/1000-t62mv-dam-aband.jpg" },
+            { "ID": "225", "Model": "T-62MV", "Category": "Damaged, Abandoned", "Date": "2024-02-11", "Image": "", "Image URL": "https://i.postimg.cc/NfyGNJk5/1016-T-62-MV-dam-aband-11-02-24.jpg" },
+            { "ID": "226", "Model": "T-62MV", "Category": "Damaged, Captured", "Date": "2022-10-04", "Image": "", "Image URL": "https://i.postimg.cc/MX2V8YzD/1501-t72mv-capt.jpg" },
+            { "ID": "227", "Model": "T-62MV", "Category": "Captured", "Date": "2022-10-07", "Image": "", "Image URL": "https://x.com/PolymarketIntel/status/1578300172676648960" },
+            { "ID": "228", "Model": "T-62MV", "Category": "Captured", "Date": "2022-10-19", "Image": "", "Image URL": "https://i.postimg.cc/Tws21jVg/1001-t62mv-capt.jpg" },
+            { "ID": "229", "Model": "T-62MV", "Category": "Captured", "Date": "2022-10-21", "Image": "", "Image URL": "https://i.postimg.cc/J074zcv2/1010-t62mv-capt.jpg" },
+            { "ID": "230", "Model": "T-62MV", "Category": "Captured", "Date": "2022-11-11", "Image": "", "Image URL": "https://pbs.twimg.com/media/FhRnmLTXgAACJf2?format=jpg&name=900x900" },
+            { "ID": "231", "Model": "T-62MV", "Category": "Captured", "Date": "2022-11-11", "Image": "", "Image URL": "https://pbs.twimg.com/media/FhRnmcwWIAA1gdD?format=jpg&name=900x900" },
+            { "ID": "232", "Model": "T-62MV", "Category": "Captured", "Date": "2022-11-15", "Image": "", "Image URL": "https://i.postimg.cc/Y0dKr79d/1010-t62mv-capt.jpg" },
+            { "ID": "233", "Model": "T-62MV", "Category": "Captured", "Date": "2022-11-18", "Image": "", "Image URL": "https://i.postimg.cc/1zy2B9Rk/1016-t62mv-capt.jpg" },
+            { "ID": "234", "Model": "T-62MV", "Category": "Captured", "Date": "2023-02-22", "Image": "", "Image URL": "https://i.postimg.cc/K8PSTHMJ/1032-t62mv-capt-22-02-23.jpg" },
+            { "ID": "235", "Model": "T-62MV", "Category": "Captured", "Date": "2022-11-30", "Image": "", "Image URL": "https://i.postimg.cc/zXT1ZPnJ/1039-T-62-MV-capt-30-11-22.jpg" },
+            { "ID": "236", "Model": "T-62MV Obr. 2022", "Category": "Destroyed", "Date": "2023-05-26", "Image": "", "Image URL": "https://x.com/PolymarketIntel/status/1662066364138283008" },
+            { "ID": "237", "Model": "T-62MV Obr. 2023", "Category": "Destroyed", "Date": "2024-02-05", "Image": "", "Image URL": "https://i.postimg.cc/QCTjdncn/1029-T-62-MV-Obr2022-destr-05-02-24.jpg" },
+            { "ID": "238", "Model": "T-62MV Obr. 2024", "Category": "Destroyed", "Date": "2024-02-16", "Image": "", "Image URL": "https://x.com/bayraktar_1love/status/1758478531003056611" },
+            { "ID": "239", "Model": "T-62MV Obr. 2025", "Category": "Destroyed", "Date": "2024-05-02", "Image": "", "Image URL": "https://i.postimg.cc/zDC7FqMD/1018-T62-MV-Obr2022-destr-02-05-24.jpg" },
+            { "ID": "240", "Model": "T-62MV Obr. 2026", "Category": "Destroyed", "Date": "2024-11-26", "Image": "", "Image URL": "https://i.postimg.cc/Vv02wsmv/1035-T-62-MV-Obr-2022-destr-26-11-24.jpg" },
+            { "ID": "241", "Model": "T-62MV Obr. 2027", "Category": "Destroyed", "Date": "2024-12-03", "Image": "", "Image URL": "https://i.postimg.cc/VLrT3DmP/1055-T-62-MV-Obr-2022-destr-03-12-24.jpg" },
+            { "ID": "242", "Model": "T-62MV Obr. 2028", "Category": "Destroyed", "Date": "2024-12-17", "Image": "", "Image URL": "https://i.postimg.cc/63MCh2sY/1049-T-62-MV-Obr-2022-destr-17-12-24.jpg" },
+            { "ID": "243", "Model": "T-62MV Obr. 2029", "Category": "Destroyed", "Date": "2025-03-03", "Image": "", "Image URL": "https://i.postimg.cc/sgsCDP01/1005-T-62-MV-Obr-2022-destr-03-03-25.jpg" },
+            { "ID": "244", "Model": "T-62MV Obr. 2030", "Category": "Damaged", "Date": "2024-01-21", "Image": "", "Image URL": "https://i.postimg.cc/5tGf06Ch/1052-T-62-MV-Obr-2022-dam-21-01-24.jpg" },
+            { "ID": "245", "Model": "T-62MV Obr. 2031", "Category": "Damaged, Abandoned", "Date": "2024-05-02", "Image": "", "Image URL": "https://i.postimg.cc/3J9ZznYP/1019-T62-MV-Obr2022-dam-aband-02-05-24.jpg" }
+        ];
+
+        const tableBody = document.getElementById('data-table-body');
+
+        data.forEach(item => {
+            const row = document.createElement('tr');
+            row.innerHTML = `
+                <td>${item.ID}</td>
+                <td>${item.Model}</td>
+                <td>${item.Category}</td>
+                <td>${item.Date}</td>
+                <td class="image-cell">
+                    <a href="${item['Image URL']}" target="_blank">
+                        <img src="${item['Image URL']}" alt="${item.Model}">
+                    </a>
+                </td>
+            `;
+            tableBody.appendChild(row);
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Data - Tank Losses</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        header {
+            background-color: #333;
+            color: white;
+            padding: 30px 20px;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            text-align: left;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .button {
+            display: block;
+            margin: 15px 0;
+            padding: 10px 20px;
+            font-size: 16px;
+            text-decoration: none;
+            background-color: #28a745;
+            color: white;
+            border-radius: 5px;
+            width: fit-content;
+            margin-left: auto;
+            margin-right: auto;
+        }
+        .button:hover {
+            background-color: #218838;
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Our Data - Tank Losses</h1>
+        <p>Access the raw CSV files for tank loss data</p>
+    </header>
+
+    <div class="container">
+        <a href="HIST 209_ Project Dataset Final - Tanks.csv" class="button" download>Download Tank Data</a>
+        <a href="HIST 209_ Project Dataset Final - AFVs.csv" class="button" download>Download AFV Data</a>
+        <a href="HIST 209_ Project Dataset Final - IFVs.csv" class="button" download>Download IFV Data</a>
+    </div>
+    <div class="container">
+        <p>All data sourced from the <a href="https://www.oryxspioenkop.com/2022/02/attack-on-europe-documenting-equipment.html" target="_blank">Oryx Visually Confirmed Losses Database</a>.</p>
+    </div>
+    <footer>
+        <p>&copy; 2025 Cameron Catanzaro. All rights reserved.</p>
+    </footer>
+</body>
+</html>

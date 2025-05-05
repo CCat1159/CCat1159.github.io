@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Russian Equipment Losses In Ukraine</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0; /* Light grey background */
+            margin: 0;
+            padding: 0;
+            text-align: center;
+        }
+        header {
+            background-color: #333; /* Dark grey background */
+            color: white;
+            padding: 30px 20px;
+        }
+        nav {
+            display: flex;
+            justify-content: center;
+            align-items: center; /* Align items vertically in the center */
+            background-color: #444; /* Dark grey nav */
+            padding: 10px;
+        }
+        nav a {
+            color: white;
+            text-decoration: none;
+            padding: 14px 20px;
+            text-align: center;
+            font-size: 18px;
+        }
+        nav a:hover {
+            background-color: #555; /* Slightly lighter grey on hover */
+        }
+        .dropdown {
+            position: relative;
+            display: inline-block;
+            margin-right: 20px; /* Add space between dropdown and button */
+        }
+        .dropdown-content {
+            display: none;
+            position: absolute;
+            background-color: #6c757d;
+            min-width: 160px;
+            z-index: 1;
+            text-align: left;
+            box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.2);
+            padding: 12px 16px;
+        }
+        .dropdown:hover .dropdown-content {
+            display: block;
+        }
+        .dropdown-content a {
+            color: white;
+            padding: 12px 16px;
+            text-decoration: none;
+            display: block;
+        }
+        .dropdown-content a:hover {
+            background-color: #5a6268;
+        }
+        .button {
+            background-color: #5a6268;
+            padding: 14px 20px;
+            font-size: 18px;
+            color: white;
+            text-decoration: none;
+            border-radius: 5px;
+            transition: background-color 0.3s ease;
+        }
+        .button:hover {
+            background-color: #218838;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 20px auto;
+            text-align: left;
+            background-color: #fff;
+            border-radius: 10px;
+            padding: 20px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        footer {
+            background-color: #333;
+            color: white;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Russian Equipment Losses In Ukraine</h1>
+        <p>Explore the interactive charts and view our gallery</p>
+    </header>
+
+    <nav>
+        <!-- Charts Dropdown -->
+        <div class="dropdown">
+            <a href="#">Charts</a>
+            <div class="dropdown-content">
+                <a href="TankGraphNew.html" target="_blank">Tank Losses By Model</a>
+                <a href="afv_losses_by_category.html" target="_blank">AFV Losses By Model</a>
+                <a href="ifv_losses_by_category.html" target="_blank">IFV Losses By Model</a>
+            </div>
+        </div>
+
+        <!-- "Our Data" Button -->
+        <a href="RawData.html" class="button">Our Data</a>
+
+        <!-- New button to lead to Tank Gallery -->
+        <a href="TankGallery.html" class="button">Tank Gallery</a>
+    </nav>
+
+    <div class="container">
+        
+        <p>
+            On 24 February 2022, Russia invaded Ukraine, starting the largest and deadliest war in Europe since World War II, 
+            in a major escalation of the conflict between the two countries which began in 2014. The fighting has caused hundreds of 
+            thousands of military casualties and tens of thousands of Ukrainian civilian casualties. It has also led to the destruction of 
+            thousands of tanks and armored vehicles. This project aims to analyze the data of Russian military equipment losses in the war,
+            providing insights into the conflict's impact on military resources.
+        </p>
+        <p>Select an option from the dropdown menus above to explore the data.</p>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Cameron Catanzaro. All rights reserved.</p>
+    </footer>
+</body>
+</html>
